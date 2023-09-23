@@ -22,7 +22,7 @@
                                       </li>
                                       @forelse ($categories as $category)
                                           <li>
-                                              <a href="gallery.html">{{ $category->categoryName }}</a>
+                                              <a href="/category/{{ $category->categoryName }}/{{ $category->id }}">{{ $category->categoryName }}</a>
                                           </li>
                                       @empty
                                       @endforelse

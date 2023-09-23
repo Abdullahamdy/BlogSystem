@@ -17,7 +17,7 @@
                                     @if ($blog && count($blog->cat) > 0)
                                         @forelse ($blog->cat as $blogcategories)
                                             <li>
-                                                <a href="blog.html">{{ $blogcategories->categoryName }} </a>
+                                                <a href="/tag/{{ $blogcategories->categoryName }}/{{ $blogcategories->id }}">{{ $blogcategories->categoryName }} </a>
                                             </li>
                                         @empty
                                         @endforelse
@@ -324,7 +324,7 @@
                                 @if ($blog && count($blog->tag))
                                     @forelse($blog->tag as $blogtag)
                                         <li>
-                                            <a href="">{{ $blogtag->tagName }}</a>
+                                            <a href="/tag/{{ $blogtag->tagName }}/{{ $blogtag->id }}">{{ $blogtag->tagName }}</a>
                                         </li>
                                     @empty
                                     @endforelse

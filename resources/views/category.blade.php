@@ -9,18 +9,17 @@
                 <div class="col-12 col-md-10 col-lg-8">
                     <div class="row">
 
-                        @forelse ($categories as $category)
+
                             <div class="col-12 col-md-4 col-lg-4">
                                 <a href="">
                                     <div class="banner_box">
                                         <i class="fab fa-laravel"></i>
-                                        <h3 class="banner_box_h3">{{ $category->categoryName }}</h3>
+                                        <h3 class="banner_box_h3">{{ $categoryName }}</h3>
                                         {{-- <p>The Toptal Blog is the top hub for developers.</p> --}}
                                     </div>
                                 </a>
                             </div>
-                        @empty
-                        @endforelse
+
 
 
 
@@ -87,18 +86,12 @@
                     </div>
                 @empty
                 @endforelse
-
-
                 </div>
+                {!! $blogs->links() !!}
 
-              <div class="text-center">
-                <a href="/allblogs"><button class="btn btn-primary"> All Blogs</button></a>
-              </div>
             </div>
         </div>
-        <!-- PAGINATION -->
-        
-        <!-- PAGINATION -->
+
     </div>
     <!-- BODY -->
 
