@@ -39,10 +39,9 @@ class BlogController extends Controller
         $blogs =  Blog::with('user')->whereHas('cat', function ($q) use ($id) {
             $q->where('category_id', $id);
         })
-        ->orderBy('id', 'desc')
-        ->select('id', 'title',  'slug', 'user_id', 'featuredImage')->paginate(3);
-        return view('category')->with(['categories'=>$categories,'categoryName' => $categoryName, 'blogs' => $blogs]);
-
+            ->orderBy('id', 'desc')
+            ->select('id', 'title',  'slug', 'user_id', 'featuredImage')->paginate(3);
+        return view('category')->with(['categories' => $categories, 'categoryName' => $categoryName, 'blogs' => $blogs]);
     }
     public function tagIndex(Request $request, $tagName, $id)
     {
@@ -50,17 +49,34 @@ class BlogController extends Controller
         $blogs =  Blog::with('user')->whereHas('tag', function ($q) use ($id) {
             $q->where('tag_id', $id);
         })
-        ->orderBy('id', 'desc')
-        ->select('id', 'title',  'slug', 'user_id', 'featuredImage')->paginate(3);
-        return view('tag')->with(['categories'=>$categories,'tagName' => $tagName, 'blogs' => $blogs]);
-
+            ->orderBy('id', 'desc')
+            ->select('id', 'title',  'slug', 'user_id', 'featuredImage')->paginate(3);
+        return view('tag')->with(['categories' => $categories, 'tagName' => $tagName, 'blogs' => $blogs]);
     }
 
     public function allblogs()
     {
         $categories = Category::select('id', 'categoryName')->get();
-        $blogs =  Blog::orderBy('id', 'desc')->with(['cat','user'])
-        ->select('id', 'title',  'slug', 'user_id', 'featuredImage')->paginate(3);
-        return view('blogs')->with(['categories'=>$categories, 'blogs' => $blogs]);;
+        $blogs =  Blog::orderBy('id', 'desc')->with(['cat', 'user'])
+            ->select('id', 'title',  'slug', 'user_id', 'featuredImage')->paginate(3);
+        return view('blogs')->with(['categories' => $categories, 'blogs' => $blogs]);;
+    }
+
+    public function search(Request $request)
+    {
+        $str = $request->str;
+        $blogs =  Blog::orderBy('id', 'desc')->with(['cat', 'user'])
+            ->select('id', 'title',  'slug', 'user_id', 'featuredImage');
+            if(!$str) return $blogs->get();
+
+            $blogs->where('title', 'LIKE', "%{$str}%")
+            ->orWhereHas('cat',function($q) use($str){
+                $q->where('categoryName',$str);
+
+            })->orWhereHas('tag',function($q)use($str){
+                $q->where('tagname',$str);
+            });
+        
+        return $blogs->get();
     }
 }

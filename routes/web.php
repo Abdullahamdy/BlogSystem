@@ -22,3 +22,4 @@ Route::get('/blog/{slug}',[BlogController::class,'singleBlog']);
 Route::get('/category/{categoryName}/{id}',[BlogController::class,'categoryIndex']);
 Route::get('/tag/{tagName}/{id}',[BlogController::class,'tagIndex']);
 Route::get('/allblogs',[BlogController::class,'allblogs']);
+Route::get('/search',[BlogController::class,'search']);
